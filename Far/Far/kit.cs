@@ -5,9 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Far
-{
+{ 
     class kit
     {
+        public static void setPos(int x, int y, int width, int height)
+        {
+            if (x >= 0 && x <= width && y >= 0 && y <= height)
+                Console.SetCursorPosition(x, y);
+            else
+                throw new Exception("The set position function canno't set position at input");
+        }
         public static void writeChar(char? alpha)
         {
             if (alpha.HasValue)
@@ -16,14 +23,11 @@ namespace Far
                 throw new Exception("Empty value in kit => writeChar()");
                 
         }
-        public static void writeString(string? mess)
+        public static void writeString(object mess)
         {
-            if (mess.HasValue)
-                for (int i = 0; i < mess.Value.Length; i++)
-                    writeChar((char)mess.Value[i]);
-            else
-                throw new Exception("Empty value in kit => writeString()");
+            string line = mess as string;
+            for (int i = 0; i < line.Length; i++)
+                writeChar((char)line[i]);
         }
-
     }
 }

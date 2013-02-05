@@ -10,7 +10,8 @@ namespace Far
     {
         public @body()
         {
-            kit.writeString("hello dear user");
+            kit.writeChar('1');
+            kit.writeString("hello dear user ahahhaha i will try to analyze the information about user");
         }
     }
 }
