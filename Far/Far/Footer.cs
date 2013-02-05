@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Far
 {
-    class Program
+    class Footer
     {
-        static void Main(string[] args)
-        {
-            Application app = new Application();
-        }
+
     }
 }

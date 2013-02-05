@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Far
 {
-    class Program
+    class body
     {
-        static void Main(string[] args)
-        {
-            Application app = new Application();
-        }
     }
 }
