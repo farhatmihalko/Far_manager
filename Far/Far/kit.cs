@@ -8,12 +8,20 @@ namespace Far
 { 
     class kit
     {
-        public static void setPos(int x, int y, int width, int height)
+        public static void setPos(int x, int y)
         {
-            if (x >= 0 && x <= width && y >= 0 && y <= height)
+            if (x >= 0 && x <= @params.WIDTH && y >= 0 && y <= @params.HEIGHT)
                 Console.SetCursorPosition(x, y);
             else
-                throw new Exception("The set position function canno't set position at input");
+                throw new Exception("The set position function cannot set position at input");
+        }
+        public static int getLeft()
+        {
+            return Console.CursorLeft;
+        }
+        public static int getTop()
+        {
+            return Console.CursorTop;
         }
         public static void writeChar(char? alpha)
         {
@@ -28,6 +36,34 @@ namespace Far
             string line = mess as string;
             for (int i = 0; i < line.Length; i++)
                 writeChar((char)line[i]);
+        }
+        public static void fontColor(ConsoleColor color = ConsoleColor.White)
+        {
+            Console.ForegroundColor = color;
+        }
+        public static void backgroundColor(ConsoleColor color = ConsoleColor.Black)
+        {
+            Console.BackgroundColor = color;
+        }
+
+        public static void draw(int _x_from, int _y_from, int _x_end, int _y_end, char alpha = ' ')
+        {
+            for (int i = _x_from; i < _x_end; i++)
+            {
+                for (int j = _y_from; j < _y_end; j++)
+                {
+                    setPos(i, j);
+                    writeChar(alpha);
+                }
+            }
+        }
+        public static void clear(int _x_from, int _x_end, int y)
+        {
+            for (int i = _x_from; i < _x_end; i++)
+            {
+                setPos(i, y);
+                writeChar(' ');
+            }
         }
     }
 }

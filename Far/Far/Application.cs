@@ -11,7 +11,7 @@ namespace Far
         public int width;
         public int height;
 
-        public Application(int _width = 100, int _height = 50)
+        public Application(int _width = 70, int _height = 50)
         {
             this.width = _width;
             this.height = _height;
@@ -23,11 +23,25 @@ namespace Far
              */
             this.init();
         }
-
         public void init()
         {
+            /*
+             * 
+             * initialize the far-window
+             * 
+             */
+            Console.SetBufferSize(this.width, this.height);
+            Console.SetWindowSize(this.width, this.height);
+
+            //draw background color
+            kit.backgroundColor(ConsoleColor.DarkBlue);
+            kit.setPos(0, 0);
+            Console.Write(' ');
+            for (var i = 0; i < this.height; i++)
+                Console.WriteLine("\n");
+
             @body body = new @body();
-            @footer footer = new @footer();
+            @footer footer = new @footer(this.width, this.height);
         }
     }
 }
