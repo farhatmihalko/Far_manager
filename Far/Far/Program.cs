@@ -11,6 +11,8 @@ namespace Far
         static void Main(string[] args)
         {
             Application app = new Application();
+            //read key
+            Console.ReadKey();
         }
     }
 }

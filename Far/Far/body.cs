@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Far
 {
-    class body
+    class @body
     {
+        public @body()
+        {
+            kit.writeString("hello dear user");
+        }
     }
 }

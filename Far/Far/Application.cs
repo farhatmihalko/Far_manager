@@ -8,19 +8,26 @@ namespace Far
 {
     class Application
     {
+        public int width;
+        public int height;
 
-        //default params
-        public static int _height = 50;
-        public static int _width  = 120;
-
-        public Application()
+        public Application(int _width = 100, int _height = 50)
         {
-            //initialize our application
-            this.LoadComponents();
+            this.width = _width;
+            this.height = _height;
+            
+            /*
+             * Initliaze all components =>
+             * 1) body
+             * 2) footer
+             */
+            this.init();
         }
-        private void LoadComponents()
-        {
 
+        public void init()
+        {
+            @body body = new @body();
+            @footer footer = new @footer();
         }
     }
 }
