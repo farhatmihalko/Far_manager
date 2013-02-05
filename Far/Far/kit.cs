@@ -65,5 +65,11 @@ namespace Far
                 writeChar(' ');
             }
         }
+        public static void clearChar(int x, int y)
+        {
+            setPos(x, y);
+            writeChar(' ');
+            setPos(x, y);
+        }
     }
 }

@@ -15,9 +15,10 @@ namespace Far
          * Working with directory and cmd
          * 
          */
-        public string path = @"C:\";
+        public string CURR_PATH;
         public string CMD_PR = "->";
-        public string CMD_PATH = "";
+        public StringBuilder CURR_STRING;
+
         /*
          * 
          * Window sizes
@@ -25,13 +26,20 @@ namespace Far
          */ 
         public int width;
         public int height;
-        
+
+        public int draw_y;
+        public int draw_x;
+
         public @footer(int width = 100, int height = 50)
         {
             this.width = width;
             this.height = height;
-
+            this.draw_x = 0;
+            this.draw_y = height - 2;
             this.draw();
+
+            //initialize
+            this.CURR_STRING = new StringBuilder();
         }
 
         private void draw()
@@ -42,7 +50,6 @@ namespace Far
              * 
              */
             kit.setPos(0, height - 2);
-
             //footer cmd
             kit.fontColor(ConsoleColor.White);
             kit.backgroundColor(ConsoleColor.Black);
@@ -51,88 +58,60 @@ namespace Far
             kit.draw(this.width - 2, this.height - 2, this.width-1, this.height - 1, '↑');
             kit.fontColor(ConsoleColor.White);
             kit.setPos(0, this.height - 2);
-            this.cmd(height - 3);
         }
 
-        private void cmd(int P_HEIGHT)
-        {
-            string printer = this.path + this.CMD_PR + " ";
-            /*
-             * 
-             * CMD WORKER => P_HEIGHT is needed param!
-             *
-             */
-            if (Directory.Exists(this.path))
-                kit.writeString(printer);
-            else
-                Directory.CreateDirectory(this.path);
 
-            cmd_line(printer);
-        }
-
-        private void cmd_line(string _path)
+        public void setPath(string _path)
         {
-            StringBuilder cmd_line = new StringBuilder();
-            while (true)
+            if (Directory.Exists(_path))
             {
-                int left_before_push = Console.CursorLeft;
-                int top_before_push = Console.CursorTop;
-                //press button
-                ConsoleKeyInfo btn = Console.ReadKey();
-                ConsoleKey btn_char = btn.Key;
-                //new position after pressing
-                int left_after_push = Console.CursorLeft;
-                int top_after_push  = Console.CursorTop;
+                this.CURR_PATH = _path;
+                kit.setPos(0, this.draw_y);
+                DirectoryInfo dr = new DirectoryInfo(_path);
+                kit.writeString(dr.FullName + CMD_PR + " ");
+            }
+        }
+        public int leftMinimalCmd()
+        {
+            return (this.CURR_PATH + CMD_PR).Length + 1;
+        }
+        public int rightMinimalCmd()
+        {
+            return this.width - 10;
+        } 
 
-                if (left_after_push > this.width - _path.Length - 10)
-                    kit.setPos(left_before_push, top_before_push);    
-
-                switch (btn_char)
+        public void cmd()
+        {
+            //we can parse commands
+            if (this.CURR_STRING.Length > 0)
+            {
+                string[] patt = this.CURR_STRING.ToString().Split(' ');
+                if (patt[0].Equals("cd") && patt.Length == 2)
                 {
-                    case ConsoleKey.Enter:
-                        //enter pressed
-                        this.cmd_processing(cmd_line.ToString());
-                        //clear cmd_line
-                        cmd_line.Remove(0, cmd_line.Length);
-                        //clear footer line
-                        kit.draw(_path.Length, top_before_push, this.width - 2, top_before_push + 1, ' ');
-                        kit.setPos(_path.Length, top_before_push);
-                        break;
-                    case ConsoleKey.Backspace:
-                        //backspace pressed
-                        if (left_before_push > _path.Length)
+                    if (patt[1].Equals(".."))
+                    {
+                        try
                         {
-                            kit.writeChar(' ');
-                            kit.setPos(left_after_push, top_after_push);
-                            cmd_line.Remove(cmd_line.Length - 1, 1);
+                            this.setPath(Directory.GetParent(this.CURR_PATH).FullName);
                         }
-                        else
-                            kit.setPos(left_before_push, top_before_push);
-                        break;
-                    default:
-                        //otherwise
-                        break;
+                        catch (NullReferenceException ex)
+                        {
+                        }
+                    }
+                    else
+                    {
+                        string pp = this.CURR_PATH + patt[1];
+                        if (Directory.Exists(@patt[1]))
+                            this.setPath(@patt[1]);
+                        else if (Directory.Exists(@pp))
+                        {
+                            this.setPath(this.CURR_PATH + patt[1]);
+                        }
+                    }
                 }
-
-                if (@params.chars.Contains(btn.KeyChar))
-                {
-                    //if params.char
-                    cmd_line = cmd_line.Append(btn.KeyChar);
-                  
-                }
-
             }
-        }
-
-        private void cmd_processing(string _line)
-        {
-            string[] patt = _line.Split(' ');
-            if (patt[0] == "cd" && patt.Length == 2)
-            {
-                string @path = patt[1];
-                this.path = @path;
-                cmd(1);
-            }
+            //clear cmd memory
+            this.CURR_STRING.Remove(0, this.CURR_STRING.Length);
         }
     }
 }
