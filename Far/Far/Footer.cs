@@ -58,69 +58,22 @@ namespace Far
             kit.fontColor(ConsoleColor.White);
             kit.backgroundColor(ConsoleColor.Black);
             kit.draw(0, this.height - 2, this.width, this.height - 1, ' ');
+            
+
+            this.timeWidget();
+            this.commandWidget();
+        }
+        private void timeWidget()
+        {
+            DateTime now = new DateTime();
+            kit.writeChar('1');
             kit.fontColor(ConsoleColor.Green);
-            kit.draw(this.width - 2, this.height - 2, this.width-1, this.height - 1, '↑');
+            //kit.draw(this.width - 2, this.height - 2, this.width - 1, this.height - 1, '↑');
             kit.fontColor(ConsoleColor.White);
+        }
+        private void commandWidget()
+        {
             kit.setPos(0, this.height - 2);
-        }
-
-
-        public void setPath(string _path)
-        {
-            //refactoring
-            if (Directory.Exists(_path))
-            {
-                setPathAf(_path);
-            }
-        }
-        private void setPathAf(string _path)
-        {
-            this.CURR_PATH = _path;
-            kit.setPos(0, this.draw_y);
-            DirectoryInfo dr = new DirectoryInfo(_path);
-            if (_path.Length > 25)
-                kit.writeString(dr.FullName.Substring(0, 10) + "..." + dr.FullName.Substring(dr.FullName.Length - 10, 10));
-            else
-                kit.writeString(dr.FullName);
-            kit.writeString(" ->");
-        }
-        public int leftMinimalCmd()
-        {
-            return (this.CURR_PATH + CMD_PR).Length + 1;
-        }
-        public int rightMinimalCmd()
-        {
-            return this.width - 10;
-        } 
-
-        public void cmd()
-        {
-            if (this.CURR_STRING.Length > 0)
-            {
-                //we have command string
-                cmd_processing(CURR_STRING.ToString().Split(' '));
-            }
-            this.CURR_STRING.Remove(0, this.CURR_STRING.Length);
-        }
-        private void cmd_processing(string[] args)
-        {
-            //command
-            string command = args[0];
-            switch (command)
-            {
-                case "exit" :
-                    Environment.Exit(0);
-                    break;
-                case "cd" :
-                    string path = args[1];
-                    setPathAf(path);
-                    break;
-                case "rm" :
-                    string target = args[1];
-                    break;
-                default :
-                    break;
-            }
         }
     }
 }

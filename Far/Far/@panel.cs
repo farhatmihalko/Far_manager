@@ -32,7 +32,7 @@ namespace Far
         private void draw()
         {
             //drawing header
-            kit.draw(_x, _y + _height - 2, _x + _width, _y + _height - 1, '_');
+            kit.draw(_x, _y + _height - 2, _x + _width, _y + _height - 1, '—');
             this.footerTextDirectoryX = _x;
             this.footerTextDirectoryY = _y + _height;
 
@@ -60,7 +60,7 @@ namespace Far
         }
         public void WritePanelFooter(int _file_number = 0, long _total_size = 0)
         {
-            string _T = this.sizeReduce(_total_size.ToString());
+            string _T = this.sizeReduce(_total_size.ToString()) + " in " + _file_number + " files";
             if (_T.Length > this._width / 2 - 2)
             {
                 _T = _T.Substring(0, this._width / 2 - 2);
