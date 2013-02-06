@@ -49,9 +49,7 @@ namespace Far
         private void controller(@body _body, @footer _footer)
         {
             bool ST_CODE = true;
-            _footer.setPath(@"C:\Intel");
-            _footer.setPath(@"C:\Intel\Logs");
-
+            _footer.setPath(@"C:\");
             while (ST_CODE)
             {
                 int left_before_push = Console.CursorLeft;

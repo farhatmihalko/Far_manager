@@ -63,6 +63,7 @@ namespace Far
 
         public void setPath(string _path)
         {
+            //refactoring
             if (Directory.Exists(_path))
             {
                 this.CURR_PATH = _path;
@@ -82,6 +83,9 @@ namespace Far
 
         public void cmd()
         {
+            //System.Diagnostics.Process.Start(CURR_STRING.ToString());
+            /*
+            //refactoring
             //we can parse commands
             if (this.CURR_STRING.Length > 0)
             {
@@ -111,6 +115,7 @@ namespace Far
                 }
             }
             //clear cmd memory
+           */
             this.CURR_STRING.Remove(0, this.CURR_STRING.Length);
         }
     }
