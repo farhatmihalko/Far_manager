@@ -64,6 +64,18 @@ namespace Far
         {
             this.right = new _panel(1, 1, @params.WIDTH / 2 -1, @params.HEIGHT - 5);
             this.left = new _panel(@params.WIDTH /2 + 1, 1, @params.WIDTH /2 - 2, @params.HEIGHT -5);
+            //now set timerwidget
+            this.setTimerWidget();
+        }
+        private void setTimerWidget()
+        {
+            string current_time = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
+            ConsoleColor before_font = kit.FontColor;
+            ConsoleColor before_bg = kit.BGColor;
+            kit.colors(ConsoleColor.DarkCyan, ConsoleColor.Black) ;
+            kit.setPos(0, 0);
+            kit.writeString(current_time);
+            kit.colors(before_bg, before_font);
         }
     }
 }

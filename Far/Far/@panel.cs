@@ -18,6 +18,7 @@ namespace Far
         private int footerTextDirectoryX;
         private int footerTextDirectoryY;
 
+        private _file_zone file_area;
 
 
         public _panel(int x, int y, int width, int height)
@@ -28,6 +29,7 @@ namespace Far
             this._height = height;
             //draw panel
             this.draw();
+            //initialize 
         }
         private void draw()
         {
@@ -117,5 +119,19 @@ namespace Far
                 return _size.ToString() + rr;
             }
         #endregion 
+    }
+
+    class _file_zone
+    {
+        public _file_zone()
+        {
+
+        }
+        public void draw(string[] arr)
+        {
+            foreach(string line in arr)
+            {
+            }
+        }
     }
 }

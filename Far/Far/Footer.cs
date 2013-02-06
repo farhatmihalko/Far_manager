@@ -59,21 +59,14 @@ namespace Far
             kit.backgroundColor(ConsoleColor.Black);
             kit.draw(0, this.height - 2, this.width, this.height - 1, ' ');
             
+            this.commandWidget(@"C:\fara");
+        }
 
-            this.timeWidget();
-            this.commandWidget();
-        }
-        private void timeWidget()
-        {
-            DateTime now = new DateTime();
-            kit.writeChar('1');
-            kit.fontColor(ConsoleColor.Green);
-            //kit.draw(this.width - 2, this.height - 2, this.width - 1, this.height - 1, '↑');
-            kit.fontColor(ConsoleColor.White);
-        }
-        private void commandWidget()
+        
+        private void commandWidget(string _path)
         {
             kit.setPos(0, this.height - 2);
+            kit.writeString(_path);
         }
     }
 }

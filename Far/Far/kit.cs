@@ -8,7 +8,8 @@ namespace Far
 { 
     class kit
     {
-        public static ConsoleColor? footerDef = null;
+        public static ConsoleColor FontColor = ConsoleColor.White;
+        public static ConsoleColor BGColor = ConsoleColor.Black;
 
         public static void setPos(int x, int y)
         {
@@ -39,16 +40,19 @@ namespace Far
             for (int i = 0; i < line.Length; i++)
                 writeChar((char)line[i]);
         }
+        public static void colors(ConsoleColor colorB, ConsoleColor colorF)
+        {
+            fontColor(colorF);
+            backgroundColor(colorB);
+        }
         public static void fontColor(ConsoleColor color = ConsoleColor.White)
         {
+            FontColor = Console.ForegroundColor;
             Console.ForegroundColor = color;
-            if (footerDef.HasValue)
-                footerDef = color;
-            else
-                footerDef = ConsoleColor.White;
         }
         public static void backgroundColor(ConsoleColor color = ConsoleColor.Black)
         {
+            BGColor = Console.BackgroundColor;
             Console.BackgroundColor = color;
         }
 
