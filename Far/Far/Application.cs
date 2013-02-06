@@ -50,6 +50,7 @@ namespace Far
         {
             bool ST_CODE = true;
             _footer.setPath(@"C:\");
+            _body.setPath(@"C:\");
             while (ST_CODE)
             {
                 int left_before_push = Console.CursorLeft;

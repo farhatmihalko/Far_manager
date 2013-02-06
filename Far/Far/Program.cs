@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Far
 {
@@ -10,14 +11,15 @@ namespace Far
     {
         static void Main(string[] args)
         {
+            //Console.Read();
             Application app = new Application(@params.WIDTH, @params.HEIGHT);
         }
     }
 
     class @params
     {
-        public static int WIDTH = 160;
-        public static int HEIGHT = 35;
+        public static int WIDTH = 120;
+        public static int HEIGHT = 30;
         public static char[] chars = new char[]{ 
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',

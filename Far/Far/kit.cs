@@ -8,6 +8,8 @@ namespace Far
 { 
     class kit
     {
+        public static ConsoleColor? footerDef = null;
+
         public static void setPos(int x, int y)
         {
             if (x >= 0 && x <= @params.WIDTH && y >= 0 && y <= @params.HEIGHT)
@@ -40,6 +42,10 @@ namespace Far
         public static void fontColor(ConsoleColor color = ConsoleColor.White)
         {
             Console.ForegroundColor = color;
+            if (footerDef.HasValue)
+                footerDef = color;
+            else
+                footerDef = ConsoleColor.White;
         }
         public static void backgroundColor(ConsoleColor color = ConsoleColor.Black)
         {

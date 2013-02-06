@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using System.Text;
+using System.ComponentModel;
 
 namespace Far
 {
@@ -18,7 +20,7 @@ namespace Far
         public string CURR_PATH;
         public string CMD_PR = "->";
         public StringBuilder CURR_STRING;
-
+       
         /*
          * 
          * Window sizes
@@ -40,6 +42,8 @@ namespace Far
 
             //initialize
             this.CURR_STRING = new StringBuilder();
+
+            
         }
 
         private void draw()
@@ -66,11 +70,19 @@ namespace Far
             //refactoring
             if (Directory.Exists(_path))
             {
-                this.CURR_PATH = _path;
-                kit.setPos(0, this.draw_y);
-                DirectoryInfo dr = new DirectoryInfo(_path);
-                kit.writeString(dr.FullName + CMD_PR + " ");
+                setPathAf(_path);
             }
+        }
+        private void setPathAf(string _path)
+        {
+            this.CURR_PATH = _path;
+            kit.setPos(0, this.draw_y);
+            DirectoryInfo dr = new DirectoryInfo(_path);
+            if (_path.Length > 25)
+                kit.writeString(dr.FullName.Substring(0, 10) + "..." + dr.FullName.Substring(dr.FullName.Length - 10, 10));
+            else
+                kit.writeString(dr.FullName);
+            kit.writeString(" ->");
         }
         public int leftMinimalCmd()
         {
@@ -83,40 +95,32 @@ namespace Far
 
         public void cmd()
         {
-            //System.Diagnostics.Process.Start(CURR_STRING.ToString());
-            /*
-            //refactoring
-            //we can parse commands
             if (this.CURR_STRING.Length > 0)
             {
-                string[] patt = this.CURR_STRING.ToString().Split(' ');
-                if (patt[0].Equals("cd") && patt.Length == 2)
-                {
-                    if (patt[1].Equals(".."))
-                    {
-                        try
-                        {
-                            this.setPath(Directory.GetParent(this.CURR_PATH).FullName);
-                        }
-                        catch (NullReferenceException ex)
-                        {
-                        }
-                    }
-                    else
-                    {
-                        string pp = this.CURR_PATH + patt[1];
-                        if (Directory.Exists(@patt[1]))
-                            this.setPath(@patt[1]);
-                        else if (Directory.Exists(@pp))
-                        {
-                            this.setPath(this.CURR_PATH + patt[1]);
-                        }
-                    }
-                }
+                //we have command string
+                cmd_processing(CURR_STRING.ToString().Split(' '));
             }
-            //clear cmd memory
-           */
             this.CURR_STRING.Remove(0, this.CURR_STRING.Length);
+        }
+        private void cmd_processing(string[] args)
+        {
+            //command
+            string command = args[0];
+            switch (command)
+            {
+                case "exit" :
+                    Environment.Exit(0);
+                    break;
+                case "cd" :
+                    string path = args[1];
+                    setPathAf(path);
+                    break;
+                case "rm" :
+                    string target = args[1];
+                    break;
+                default :
+                    break;
+            }
         }
     }
 }
