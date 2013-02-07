@@ -50,6 +50,7 @@ namespace Far
         {
             bool ST_CODE = true;
             _body.setPath(@"C:\");
+
             while (ST_CODE)
             {
                 int left_before_push = Console.CursorLeft;
@@ -61,6 +62,21 @@ namespace Far
 
                 int left_after_push = Console.CursorLeft;
                 int top_after_push = Console.CursorTop;
+
+                switch (btn_char)
+                {
+                    case ConsoleKey.UpArrow :
+                        _body.moveUp();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        _body.moveDown();
+                        break;
+                    case ConsoleKey.Enter :
+                        _body.open();
+                        break;
+                    default :
+                        break;
+                }
             }
         }
     }

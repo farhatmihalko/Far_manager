@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections;
 
 namespace Far
 {
@@ -18,7 +19,7 @@ namespace Far
 
     class @params
     {
-        public static int WIDTH = 165;
+        public static int WIDTH = 125;
         public static int HEIGHT = 38;
         public static char[] chars = new char[]{ 
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',

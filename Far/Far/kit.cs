@@ -55,7 +55,6 @@ namespace Far
             BGColor = Console.BackgroundColor;
             Console.BackgroundColor = color;
         }
-
         public static void draw(int _x_from, int _y_from, int _x_end, int _y_end, char alpha = ' ')
         {
             for (int i = _x_from; i < _x_end; i++)
@@ -80,6 +79,18 @@ namespace Far
             setPos(x, y);
             writeChar(' ');
             setPos(x, y);
+        }
+
+        public static string addToFull(string line, int max)
+        {
+            if (line.Length >= max)
+                return line;
+            else
+            {
+                for (int i = 0; i < max - line.Length; i++)
+                    line += " ";
+                return line;
+            }
         }
     }
 }

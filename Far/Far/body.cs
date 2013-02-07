@@ -11,6 +11,9 @@ namespace Far
         _panel right;
         _panel left;
 
+        string active;
+        _panel _active;
+
         public @body()
         {
             this.draw();
@@ -27,6 +30,34 @@ namespace Far
         {
 
         }
+
+        #region controls
+        public void moveUp()
+        {
+            this._active.up();
+        }
+        public void moveDown()
+        {
+            this._active.down();
+        }
+        public void open()
+        {
+            this._active.open();   
+        }
+        public void changeActive()
+        {
+            if (active.Equals("right"))
+            {
+                active = "left";
+                _active = this.left;
+            }
+            else
+            {
+               active = "right";
+               _active = this.right;
+            }
+        }
+        #endregion
 
         /*
          * 
@@ -64,6 +95,15 @@ namespace Far
         {
             this.right = new _panel(1, 1, @params.WIDTH / 2 -1, @params.HEIGHT - 5);
             this.left = new _panel(@params.WIDTH /2 + 1, 1, @params.WIDTH /2 - 2, @params.HEIGHT -5);
+
+            //default env
+            _active = this.left;
+            active = "left";
+            //end
+
+            this.right.setPathAndDraw(@"C:\");
+            this.left.setPathAndDraw(@"D:\Files\S\Art\КР2");
+
             //now set timerwidget
             this.setTimerWidget();
         }
