@@ -18,6 +18,7 @@ namespace Far
 
         public _panel @instance;
 
+        public string headerName = " Some";
         
         //private data
         private int footerTextDirectoryX;
@@ -34,7 +35,7 @@ namespace Far
             //draw panel
             this.draw();  
             //file contens
-             
+            
          }
         private void draw()
         {

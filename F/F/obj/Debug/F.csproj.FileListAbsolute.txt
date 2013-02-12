@@ -1,0 +1,6 @@
+D:\Far_manager\F\F\bin\Debug\F.exe.config
+D:\Far_manager\F\F\obj\Debug\F.csprojResolveAssemblyReference.cache
+D:\Far_manager\F\F\bin\Debug\F.exe
+D:\Far_manager\F\F\bin\Debug\F.pdb
+D:\Far_manager\F\F\obj\Debug\F.exe
+D:\Far_manager\F\F\obj\Debug\F.pdb
