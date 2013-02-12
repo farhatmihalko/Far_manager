@@ -59,9 +59,15 @@ namespace F
                bool _overloading = false;
                int maximal = 0;
 
-               //adding root path to container
-               LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", current_dir.Parent.FullName));
-
+               try
+               {
+                   //adding root path to container
+                   LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", current_dir.Parent.FullName));
+               }
+               catch (NullReferenceException e)
+               {
+                   throw new Exception(current_dir.Parent.ToString());
+               }
                //get dirs
                foreach (DirectoryInfo iteration in dirs)
                {
