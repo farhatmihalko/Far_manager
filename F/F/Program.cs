@@ -27,7 +27,7 @@ namespace F
         public static string TITLE = "Far Manager";
 
         //default sizes
-        public static int WIDTH = 150; //must be even number
+        public static int WIDTH = 120; //must be even number
         public static int HEIGHT = 35; //must be even number
         
         //default colors

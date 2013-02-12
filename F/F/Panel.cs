@@ -76,7 +76,7 @@ namespace F
             @kit.writeChar('╝');
 
             //drawind subfooter
-            @kit.draw(this.x + 1, this.y + this.height - 3, this.x + this.width - 1, this.y + this.height - 2, '—');
+            @kit.draw(this.x + 1, this.y + this.height - 3, this.x + this.width - 1, this.y + this.height - 2, '─');
 
             //set color to default
             @kit.setFontColor(Properties.FONT);
@@ -91,9 +91,9 @@ namespace F
 
             //drawing the observer borders
             @kit.setFontColor(ConsoleColor.Cyan);
-            @kit.draw(this.x + this.width / 2, this.y, this.x + this.width / 2 + 1, this.y + this.height, '|');
+            @kit.draw(this.x + this.width / 2, this.y, this.x + this.width / 2 + 1, this.y + this.height - 2, '│');
             @kit.setPosition(this.x + this.width / 2, this.y + this.height - 3);
-            @kit.writeChar('╧');
+            @kit.writeChar('┴');
             @kit.setFontColor(Properties.FONT);
         }
     }
@@ -128,7 +128,7 @@ namespace F
         {
             @kit.setFontColor(ConsoleColor.Cyan);
             @kit.draw(this.x + 1, this.y - 1 + this.height, this.x + this.width - 1, this.y + this.height, '═');
-            string res_string = this.sizeReduce(size) + " in " + fl_number + " files";
+            string res_string = " " + this.sizeReduce(size) + " in " + fl_number + " files ";
             @kit.setFontColor(ConsoleColor.Cyan);
             @kit.setPosition(this.x + this.width/2 - res_string.Length/2, this.y + this.height - 1);
             @kit.writeLine(res_string);
@@ -171,9 +171,9 @@ namespace F
         {
             //before adding clearing
             @kit.setBackgroundColor(Properties.BG);
-            @kit.draw(this.x + 1, this.y + this.height - 2, this.x + this.width / 2- 3, this.height - 1, ' ');
+            @kit.draw(this.x + 1, this.y + this.height - 2, this.x + this.width / 2, this.height - 1, ' ');
             //maximal length
-            int len = this.width / 2 - 3;
+            int len = this.width / 2 - 4;
             if (_name_.Length > len)
             {
                 _name_ = _name_.Substring(0, len) + "...";
