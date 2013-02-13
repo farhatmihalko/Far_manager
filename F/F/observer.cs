@@ -168,7 +168,7 @@ namespace F
                }
            }
        }
-       public void open()
+       public string open()
        {
            string path = "";
            bool clear = true;
@@ -196,6 +196,7 @@ namespace F
                LL_list.Clear();
                this.draw(@path);
            }
+           return path;
        }
        private void setChoosedFile(line choose)
        {

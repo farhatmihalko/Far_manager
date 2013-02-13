@@ -24,6 +24,8 @@ namespace F
         public int height;
         public observer ob_left;
 
+        public string current_path = "";
+
         //constructor
         public Panel(int x, int y, int width, int height)
         {
@@ -204,6 +206,9 @@ namespace F
             //we have path
             this.setHeader(_path_);
             this.ob_left.draw(_path_);
+
+            //set to default path
+            this.current_path = this.setPathInFooter(_path_);
         }
     }
 
@@ -232,7 +237,11 @@ namespace F
          */
         public void open()
         {
-            this.ob_left.open();
+            string path = this.ob_left.open();
+            string pos = this.setPathInFooter(path);
+            
+            //save the path
+            this.current_path = pos;
         }
     }
 
@@ -241,6 +250,17 @@ namespace F
      */
     partial class Panel
     {
-
+        /**
+         * Adding path string to footer
+         * @_path_ string path
+         */
+        public string setPathInFooter(string _path_)
+        {
+            int _path_max_len = 40;
+            if (_path_.Length > _path_max_len)
+                _path_ = _path_.Substring(0, _path_max_len);
+            _path_ += ">";
+            return _path_;
+        }
     }
 }

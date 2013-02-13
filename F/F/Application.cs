@@ -19,6 +19,10 @@ namespace F
         Panel _current;
         string _identification;
 
+        private int footerPos = 0;
+        private int progressive = 0;
+
+
         //constructor
         public Application()
         {
@@ -40,7 +44,7 @@ namespace F
 
             //call panel creates
             this.PanelController();
-            
+
             //call keyboad controller
             this.Controller();
         }
@@ -87,19 +91,19 @@ namespace F
     {
         private void Controller()
         {
-            //set position to footer
-            @kit.setBackgroundColor(ConsoleColor.Black);
             @kit.setPosition(0, Properties.HEIGHT - 2);
-            
+            this.setToFooterString();
             while (true)
             {
                 @kit.setBackgroundColor(ConsoleColor.Black);
                 ConsoleKeyInfo btn = Console.ReadKey();
+
                 //suppose we draw all interface
                 switch (btn.Key)
                 {
                     case ConsoleKey.Enter:
                         this._current.open();
+                        this.setToFooterString();
                         break;
                     case ConsoleKey.UpArrow:
                         this._current.up();
@@ -110,8 +114,49 @@ namespace F
                     case ConsoleKey.Tab:
                         this.TabPanel();
                         break;
+                    case ConsoleKey.Backspace :
+                        int left_before_back = Console.CursorLeft;
+                        int top_before_back = Console.CursorTop;
+                        @kit.setPosition(left_before_back, top_before_back);
+                        @kit.writeChar(' ');
+                        this.progressive --;
+                        break;
+                    default :
+                        int left_before = Console.CursorLeft;
+                        int top_before = Console.CursorTop;
+                        if (this.progressive > Properties.WIDTH - 20)
+                        {
+                            @kit.setPosition(left_before - 1, top_before);
+                            @kit.writeChar(' ');
+                            @kit.setPosition(left_before - 1, top_before);
+                            break;
+                        }
+                        bool finder = false;
+                        char _char_ = '?';
+                        for (int i = 0; i < Properties.chars.Length; i++)
+                            if (Properties.chars[i] == btn.KeyChar)
+                            {
+                                finder = true;
+                                _char_ = Properties.chars[i];
+                                break;
+                            }
+                        if (finder)
+                        {
+                            @kit.setPosition(left_before - 1, top_before);
+                            @kit.writeChar(_char_);
+                            this.progressive++;
+                        }
+                        else
+                        {
+                            @kit.setPosition(left_before - 1, top_before);
+                            @kit.writeChar(' ');
+                            @kit.setPosition(left_before - 1, top_before);
+                        }
+                        break;
                 }
-                @kit.setPosition(0, Properties.HEIGHT - 2);
+                if (this.progressive < 0)
+                    this.progressive = 0;
+                @kit.setPosition(this.footerPos + 1 + this.progressive, Properties.HEIGHT - 2);
             }
         }
     }
@@ -144,6 +189,26 @@ namespace F
                 this._identification = "right";
                 this._current = this._right;
             }
+
+            //adding to footer name
+            this.setToFooterString();
+        }
+    }
+
+    //working with footer
+    partial class Application
+    {
+        private void setToFooterString()
+        {
+            string footerPath = this._current.current_path;
+            @kit.setBackgroundColor(ConsoleColor.Black);
+            @kit.draw(0, Properties.HEIGHT - 2, Properties.WIDTH, Properties.HEIGHT - 1, ' ');
+
+            @kit.setPosition(0, Properties.HEIGHT - 2);
+            @kit.writeLine(footerPath);
+            this.footerPos = footerPath.Length;
+            @kit.setPosition(this.footerPos + 1, Properties.HEIGHT - 2);
+            this.progressive = 0;
         }
     }
 }
