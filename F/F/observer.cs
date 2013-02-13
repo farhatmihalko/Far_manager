@@ -45,65 +45,77 @@ namespace F
        {
            if(@kit.isDir(path))
            {
-               //get the information about current directory
-               DirectoryInfo current_dir = new DirectoryInfo(path);
-
-               //files and directories in this dir
-               FileInfo[] files = current_dir.GetFiles();
-               DirectoryInfo[] dirs = current_dir.GetDirectories();
-
-               //params to good grid
-               int _x_ = 0;
-               int _y_ = 1;
-               int _max_height = this.height - 6;
-               bool _overloading = false;
-               int maximal = 0;
-
-               //adding root path to container
-               LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", this.getParent(current_dir)));
                
-               //get dirs
-               foreach (DirectoryInfo iteration in dirs)
+               //clearing the memory
+               LL_list.Clear();
+
+               try
                {
-                   if (_y_ > _max_height)
+                   //get the information about current directory
+                   DirectoryInfo current_dir = new DirectoryInfo(path);
+
+
+                   //files and directories in this dir
+                   FileInfo[] files = current_dir.GetFiles();
+                   DirectoryInfo[] dirs = current_dir.GetDirectories();
+
+                   //params to good grid
+                   int _x_ = 0;
+                   int _y_ = 1;
+                   int _max_height = this.height - 6;
+                   bool _overloading = false;
+                   int maximal = 0;
+
+                   //adding root path to container
+                   LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", this.getParent(current_dir)));
+
+                   //get dirs
+                   foreach (DirectoryInfo iteration in dirs)
                    {
-                       _x_ = this.width / 2 + 1;
-                       _y_ = 0;
-                       _overloading = true;
+                       if (_y_ > _max_height)
+                       {
+                           _x_ = this.width / 2 + 1;
+                           _y_ = 0;
+                           _overloading = true;
+                       }
+                       line item = new line(this.x + _x_, this.y + _y_++, this.width / 2 - 1, false, iteration.Name, iteration.FullName);
+
+                       //Adding item to container
+                       LL_list.Add(item);
                    }
-                   line item = new line(this.x + _x_, this.y + _y_++, this.width / 2 - 1, false, iteration.Name, iteration.FullName);
 
-                   //Adding item to container
-                   LL_list.Add(item);
+                   //get files from current directory and calculate the size
+                   long files_size = 0;
+                   int files_number = 0;
+                   foreach (FileInfo iteration in files)
+                   {
+                       if (_y_ > _max_height)
+                       {
+                           _x_ = this.width / 2 + 1;
+                           _y_ = 0;
+                           _overloading = true;
+                       }
+                       files_size += iteration.Length;
+                       files_number++;
+                       line item = new line(this.x + _x_, this.y + _y_++, this.width / 2 - 1, false, iteration.Name, iteration.FullName);
+
+                       //adding item to line container
+                       LL_list.Add(item);
+                   }
+
+                   //adding path to header to panel
+                   this.parent.setHeader(path);
+
+                   //adding the size to footer
+                   this.parent.setFooter(files_size.ToString(), files_number);
+
+                   //working with received files and dirs
+                   this.Operate();
                }
-
-               //get files from current directory and calculate the size
-               long files_size = 0;
-               int files_number = 0;
-               foreach (FileInfo iteration in files)
+               catch (UnauthorizedAccessException e)
                {
-                   if (_y_ > _max_height)
-                   {
-                       _x_ = this.width / 2 + 1;
-                       _y_ = 0;
-                       _overloading = true;
-                   }
-                   files_size += iteration.Length;
-                   files_number++;
-                   line item = new line(this.x + _x_, this.y + _y_++, this.width / 2 - 1, false, iteration.Name, iteration.FullName);
-
-                   //adding item to line container
-                   LL_list.Add(item);
+                   this.parent.refresh();
                }
-
-               //adding path to header to panel
-               this.parent.setHeader(path);
-
-               //adding the size to footer
-               this.parent.setFooter(files_size.ToString(), files_number);
-
-               //working with received files and dirs
-               this.Operate();
            }     
        }
 
@@ -137,11 +149,11 @@ namespace F
                line ll = (line) LL_list[i];
                if (ll.current)
                {
+                   ll.current = false;
                    ll.changeBackground(Properties.BG);
                    line nnll = (line)LL_list[(i==0?LL_list.Count-1:i-1)];
-                   nnll.changeBackground(ConsoleColor.DarkCyan);
                    nnll.current = true;
-                   ll.current = false;
+                   nnll.changeBackground(ConsoleColor.DarkCyan);
                    @kit.setBackgroundColor(Properties.BG);
                    //adding to subfooter file name
                    this.setChoosedFile(nnll);
@@ -156,11 +168,11 @@ namespace F
                line ll = (line)LL_list[i];
                if (ll.current)
                {
+                   ll.current = false;
                    ll.changeBackground(Properties.BG);
                    line nnll = (line) LL_list[(i + 1) % LL_list.Count];
-                   nnll.changeBackground(ConsoleColor.DarkCyan);
                    nnll.current = true;
-                   ll.current = false;
+                   nnll.changeBackground(ConsoleColor.DarkCyan);
                    @kit.setBackgroundColor(Properties.BG);
                    //adding to subfooter file name
                    this.setChoosedFile(nnll);
@@ -283,6 +295,17 @@ namespace F
             @kit.setBackgroundColor(color);
             if (this.isFile())
                 @kit.setFontColor(this.getExtensionColor((new FileInfo(this.destination)).Extension));
+            if (this.isDirectory())
+            {
+                DirectoryInfo dr = new DirectoryInfo(this.destination);
+                if ((dr.Attributes & FileAttributes.Hidden) != 0)
+                {
+                    if (this.current)
+                        @kit.setFontColor(ConsoleColor.Yellow);
+                    else
+                        @kit.setFontColor(ConsoleColor.DarkCyan);
+                }
+            }
             @kit.writeLine(this.fullString(this.name, this.length));
             //to default colors
             @kit.setFontColor(Properties.FONT);
@@ -308,7 +331,18 @@ namespace F
             if (this.current)
                 @kit.setBackgroundColor(ConsoleColor.DarkCyan);
             if(this.isFile())
-             @kit.setFontColor(this.getExtensionColor((new FileInfo(this.destination)).Extension));
+                @kit.setFontColor(this.getExtensionColor((new FileInfo(this.destination)).Extension));
+            if (this.isDirectory())
+            {
+                DirectoryInfo dr = new DirectoryInfo(this.destination);
+                if ((dr.Attributes & FileAttributes.Hidden) != 0)
+                {
+                    if (this.current)
+                        @kit.setFontColor(ConsoleColor.Yellow);
+                    else
+                     @kit.setFontColor(ConsoleColor.DarkCyan);
+                }
+            }
             @kit.writeLine(drawing);
            
             //to default colors

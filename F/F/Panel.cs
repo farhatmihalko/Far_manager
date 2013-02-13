@@ -109,6 +109,7 @@ namespace F
         public void setHeader(string _name_)
         {
             @kit.setFontColor(ConsoleColor.Cyan);
+            @kit.setBackgroundColor(Properties.BG);
             @kit.draw(this.x + 1, this.y, this.x + this.width - 1, this.y + 1, '═');
             int length = _name_.Length;
             if (length > this.width - 1)
@@ -215,8 +216,8 @@ namespace F
          */
         public void refresh()
         {
-            var path = this.current_path.Substring(0, this.current_path.Length - 1);   
-
+            var path = this.current_path.Substring(0, this.current_path.Length - 1);
+            this.ob_left.draw(path);
         }
     }
 

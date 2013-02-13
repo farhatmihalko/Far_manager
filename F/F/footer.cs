@@ -84,7 +84,8 @@ namespace F
             @kit.writeString(text);
             this.space += text.Length;
             @kit.setPosition(this.space, this.y);
-
+            @kit.setFontColor(Properties.FONT);
+            @kit.setBackgroundColor(Properties.BG);
         }
     }
 }
