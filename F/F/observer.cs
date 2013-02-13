@@ -55,19 +55,13 @@ namespace F
                //params to good grid
                int _x_ = 0;
                int _y_ = 1;
-               int _max_height = this.height;
+               int _max_height = this.height - 6;
                bool _overloading = false;
                int maximal = 0;
 
-               try
-               {
-                   //adding root path to container
-                   LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", current_dir.Parent.FullName));
-               }
-               catch (NullReferenceException e)
-               {
-                   throw new Exception(current_dir.Parent.ToString());
-               }
+               //adding root path to container
+               LL_list.Add(new line(this.x + _x_, this.y + _y_ - 1, this.width / 2 - 1, true, "..", this.getParent(current_dir)));
+               
                //get dirs
                foreach (DirectoryInfo iteration in dirs)
                {
@@ -112,12 +106,24 @@ namespace F
                this.Operate();
            }     
        }
+
+       private string getParent(DirectoryInfo dir)
+       {
+           if (dir.Parent == null)
+           {
+               //this is root
+               return dir.FullName;
+           }
+           else
+               return dir.Parent.FullName;
+       }
        private void Operate()
        {
            for (int i = 0; i < LL_list.Count; i++)
            {
                line current = (line) LL_list[i];
-               current.drawLine();
+               if(i < this.height*2 - 10)
+                   current.drawLine();
            }
        }
    }

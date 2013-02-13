@@ -106,6 +106,8 @@ namespace F
          */
         public void setHeader(string _name_)
         {
+            @kit.setFontColor(ConsoleColor.Cyan);
+            @kit.draw(this.x + 1, this.y, this.x + this.width - 1, this.y + 1, '═');
             int length = _name_.Length;
             if (length > this.width - 1)
             {
@@ -232,5 +234,13 @@ namespace F
         {
             this.ob_left.open();
         }
+    }
+
+    /**
+     * Footer and cmd controller
+     */
+    partial class Panel
+    {
+
     }
 }
