@@ -210,6 +210,14 @@ namespace F
             //set to default path
             this.current_path = this.setPathInFooter(_path_);
         }
+        /**
+         * Refresh the current directory
+         */
+        public void refresh()
+        {
+            var path = this.current_path.Substring(0, this.current_path.Length - 1);   
+
+        }
     }
 
     /**

@@ -28,7 +28,7 @@ namespace F
 
         //default sizes
         public static int WIDTH = 120; //must be even number
-        public static int HEIGHT = 35; //must be even number
+        public static int HEIGHT = 36; //must be even number
         
         //default colors
         public static ConsoleColor BG = ConsoleColor.DarkBlue;
@@ -39,7 +39,7 @@ namespace F
 
         //chars that user can enter 
         public static char[] chars = new char[]{ 
-            'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
             'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',

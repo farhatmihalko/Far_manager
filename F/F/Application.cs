@@ -61,10 +61,16 @@ namespace F
         private void Painter()
         {
             this.drawBackground();
+            this.drawSubFooter();
             this.drawFooter();
         }
 
         //private methods
+        private void drawSubFooter()
+        {
+            Footer ft = new Footer(0, Properties.HEIGHT - 1);
+
+        }
         private void drawBackground()
         {
             @kit.setBackgroundColor(Properties.BG);
@@ -113,6 +119,12 @@ namespace F
                         break;
                     case ConsoleKey.Tab:
                         this.TabPanel();
+                        break;
+                    case ConsoleKey.F10:
+                        Environment.Exit(0);
+                        break;
+                    case ConsoleKey.F9:
+                        this._current.refresh();
                         break;
                     case ConsoleKey.Backspace :
                         int left_before_back = Console.CursorLeft;
