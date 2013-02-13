@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.AccessControl;
 
 namespace F
 {
@@ -67,6 +68,26 @@ namespace F
             if (File.Exists(_path_))
                 return true;
             return false;
+        }
+
+        // Removes an ACL entry on the specified directory for the specified account. 
+        public static void RemoveDirectorySecurity(string FileName, string Account, FileSystemRights Rights, AccessControlType ControlType)
+        {
+            // Create a new DirectoryInfo object.
+            DirectoryInfo dInfo = new DirectoryInfo(FileName);
+
+            // Get a DirectorySecurity object that represents the  
+            // current security settings.
+            DirectorySecurity dSecurity = dInfo.GetAccessControl();
+
+            // Add the FileSystemAccessRule to the security settings. 
+            dSecurity.RemoveAccessRule(new FileSystemAccessRule(Account,
+                                                            Rights,
+                                                            ControlType));
+
+            // Set the new access settings.
+            dInfo.SetAccessControl(dSecurity);
+
         }
     }
 }

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
+using System.Security;
+using System.Security.Permissions;
+using System.Security.AccessControl;
 
 namespace F
 {
@@ -49,12 +52,20 @@ namespace F
                //clearing the memory
                LL_list.Clear();
 
-               try
+               /*
+               var permission = new FileIOPermission(FileIOPermissionAccess.Write, path);
+               var permissionSet = new PermissionSet(PermissionState.None);
+               
+               permissionSet.AddPermission(permission);
+               */
+
+               //get the information about current directory
+               DirectoryInfo current_dir = new DirectoryInfo(path);
+
+               var access = Directory.GetAccessControl(path);
+               
+               if (true)
                {
-                   //get the information about current directory
-                   DirectoryInfo current_dir = new DirectoryInfo(path);
-
-
                    //files and directories in this dir
                    FileInfo[] files = current_dir.GetFiles();
                    DirectoryInfo[] dirs = current_dir.GetDirectories();
@@ -112,7 +123,7 @@ namespace F
                    //working with received files and dirs
                    this.Operate();
                }
-               catch (UnauthorizedAccessException e)
+               else
                {
                    this.parent.refresh();
                }

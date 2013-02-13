@@ -187,7 +187,7 @@ namespace F
              * Working only with current
              */
             this._current.commander(@"C:\Intel");
-            this._left.commander(@"C:\Intel");
+            this._left.commander(@"D:\");
         }
         public void TabPanel()
         {
