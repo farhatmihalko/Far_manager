@@ -49,7 +49,7 @@ namespace F
         {
             @kit.setPosition(this.x, this.y);
             drawNumberWithString("F1", "Help");
-            drawNumberWithString(" F2", "Show UsMenu");
+            drawNumberWithString(" F2", "Show Menu");
             drawNumberWithString(" F3", "View");
             drawNumberWithString(" F4", "Edit");
             drawNumberWithString(" F5", "Copy");

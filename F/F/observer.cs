@@ -385,6 +385,9 @@ namespace F
                 case ".sys" :
                     output = ConsoleColor.Green;
                     break;
+                case ".ini" :
+                    output = ConsoleColor.DarkRed;
+                    break;
                 default :
                     output = ConsoleColor.Cyan;
                     break;
