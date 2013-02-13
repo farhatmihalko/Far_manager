@@ -22,6 +22,7 @@ namespace F
         private int footerPos = 0;
         private int progressive = 0;
 
+        public object locker =  new Object();
 
         //constructor
         public Application()
@@ -47,6 +48,22 @@ namespace F
 
             //call keyboad controller
             this.Controller();
+        }
+
+        //reinialization
+        public void reInitialization()
+        {
+            @kit.setBackgroundColor(Properties.BG);
+            //call panel creates
+            this.PanelController();
+        }
+        //loading new driver
+        public void newDeviceInit(string _choose)
+        {
+            if (_choose == "left")
+                this._right.commander(@"C:\");
+            else if (_choose == "right")
+                this._left.commander(@"C:\");
         }
     }
 
@@ -120,6 +137,23 @@ namespace F
                     case ConsoleKey.Tab:
                         this.TabPanel();
                         break;
+                    case ConsoleKey.F1 :
+                        this.newDeviceInit("left");
+                        break;
+                    case ConsoleKey.F2:
+                        this.newDeviceInit("right");
+                        break;
+                    case ConsoleKey.F11:
+                        this.reInitialization();
+                        break;
+                    case ConsoleKey.F6:
+                        this._current.removeSelection();
+                        break;
+                    case ConsoleKey.F12:
+                        errorBox error = new errorBox(Properties.WIDTH / 4, Properties.HEIGHT / 4, Properties.WIDTH /4 * 2, 8, 
+                            this._current.current_path + ", debag mode! Please push enter or escape to return to app", this);
+                        error.init();
+                        break;
                     case ConsoleKey.F10:
                         Environment.Exit(0);
                         break;
@@ -178,8 +212,8 @@ namespace F
         public void PanelController()
         {
             //creating panel
-            this._right = new Panel(0, 0, Properties.WIDTH / 2, Properties.HEIGHT - 2);
-            this._left = new Panel(Properties.WIDTH / 2 + 1, 0, Properties.WIDTH / 2 - 1, Properties.HEIGHT - 2);
+            this._right = new Panel(0, 0, Properties.WIDTH / 2, Properties.HEIGHT - 2, this);
+            this._left = new Panel(Properties.WIDTH / 2 + 1, 0, Properties.WIDTH / 2 - 1, Properties.HEIGHT - 2, this);
             this._current = this._right;
             this._identification = "right";
 

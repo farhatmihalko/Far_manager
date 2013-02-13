@@ -48,10 +48,6 @@ namespace F
        {
            if(@kit.isDir(path))
            {
-               
-               //clearing the memory
-               LL_list.Clear();
-
                /*
                var permission = new FileIOPermission(FileIOPermissionAccess.Write, path);
                var permissionSet = new PermissionSet(PermissionState.None);
@@ -61,14 +57,14 @@ namespace F
 
                //get the information about current directory
                DirectoryInfo current_dir = new DirectoryInfo(path);
-
-               var access = Directory.GetAccessControl(path);
-               
-               if (true)
+               if (@kit.hasReadAccess(path))
                {
                    //files and directories in this dir
                    FileInfo[] files = current_dir.GetFiles();
                    DirectoryInfo[] dirs = current_dir.GetDirectories();
+
+                   //clearing the memory
+                   LL_list.Clear();
 
                    //params to good grid
                    int _x_ = 0;
@@ -98,6 +94,7 @@ namespace F
                    //get files from current directory and calculate the size
                    long files_size = 0;
                    int files_number = 0;
+
                    foreach (FileInfo iteration in files)
                    {
                        if (_y_ > _max_height)
@@ -211,13 +208,23 @@ namespace F
            }
            if (clear)
            {
-               for (int i = 0; i < LL_list.Count; i++)
+               if (@kit.hasReadAccess(@path))
                {
-                   line cc = (line)LL_list[i];
-                   cc.clearLine(Properties.BG);
+
+                   for (int i = 0; i < LL_list.Count; i++)
+                   {
+                       line cc = (line)LL_list[i];
+                       cc.clearLine(Properties.BG);
+                   }
+                   //clearing memory to perfomance and set new path
+                   LL_list.Clear();
+                   this.draw(@path);
                }
-               LL_list.Clear();
-               this.draw(@path);
+               else
+               {
+                   this.draw(this.parent.current_path.Substring(0, this.parent.current_path.Length - 1));
+                   return this.parent.current_path.Substring(0, this.parent.current_path.Length - 1);
+               }
            }
            return path;
        }
@@ -238,172 +245,27 @@ namespace F
        }
    }
 
-
-    class line
-    {
-       /**
-        * Line class
-        * @x left position in console
-        * @y top position in console
-        * @length of line
-        * @current shows that this line is selected
-        * @name name of this line
-        * @destination describes the full path of item
-        */
-        public int x;
-        public int y;
-        public int length;
-        public bool current;
-        public string name;
-        public string destination;
-
-        /**
-         * Constructor of current class
-         * @x left position
-         * @y top position
-         * @length length of current line
-         * @isCurrent show that the item is selected
-         * @name name of line
-         * @destination full path
-         */
-        public line(int x, int y, int length, bool isCurrent, string name, string destination)
-        {
-            this.x = x;
-            this.y = y;
-            this.length = length;
-            this.current = isCurrent;
-            this.name = name;
-            this.destination = destination;
-        }
-
-        /**
-         * Check if that line is directory
-         * @return(bool) if line is directory
-         */
-        public bool isDirectory()
-        {
-            if (Directory.Exists(this.destination))
-                return true;
-            return false;
-        }
-        /**
-         * Check if that line is file
-         * @return(bool) if line is file
-         */
-        public bool isFile()
-        {
-            if (File.Exists(this.destination))
-                return true;
-            return false;
-        }
-        /**
-         * If line was selected or disselected, we change
-         * the background of item
-         */
-        public void changeBackground(ConsoleColor color)
-        {
-            @kit.setPosition(this.x, this.y);
-            @kit.setBackgroundColor(color);
-            if (this.isFile())
-                @kit.setFontColor(this.getExtensionColor((new FileInfo(this.destination)).Extension));
-            if (this.isDirectory())
-            {
-                DirectoryInfo dr = new DirectoryInfo(this.destination);
-                if ((dr.Attributes & FileAttributes.Hidden) != 0)
-                {
-                    if (this.current)
-                        @kit.setFontColor(ConsoleColor.Yellow);
-                    else
-                        @kit.setFontColor(ConsoleColor.DarkCyan);
-                }
-            }
-            @kit.writeLine(this.fullString(this.name, this.length));
-            //to default colors
-            @kit.setFontColor(Properties.FONT);
-            @kit.setBackgroundColor(Properties.BG);
-        }
-        /*
-         * Clearing line
-         */
-        public void clearLine(ConsoleColor color)
-        {
-            @kit.setPosition(this.x, this.y);
-            @kit.setBackgroundColor(color);
-            @kit.writeLine(this.fullString("", this.length));
-            @kit.setBackgroundColor(Properties.BG);
-        }
-        /**
-         * Drawing this line
-         */
-        public void drawLine()
-        {
-            string drawing = fullString(this.name, this.length);
-            @kit.setPosition(this.x, this.y);
-            if (this.current)
-                @kit.setBackgroundColor(ConsoleColor.DarkCyan);
-            if(this.isFile())
-                @kit.setFontColor(this.getExtensionColor((new FileInfo(this.destination)).Extension));
-            if (this.isDirectory())
-            {
-                DirectoryInfo dr = new DirectoryInfo(this.destination);
-                if ((dr.Attributes & FileAttributes.Hidden) != 0)
-                {
-                    if (this.current)
-                        @kit.setFontColor(ConsoleColor.Yellow);
-                    else
-                     @kit.setFontColor(ConsoleColor.DarkCyan);
-                }
-            }
-            @kit.writeLine(drawing);
-           
-            //to default colors
-            @kit.setFontColor(Properties.FONT);
-            @kit.setBackgroundColor(Properties.BG);
-        }
-        /**
-         * Cut the chars that not visible
-         * @return(String)
-         */
-        private string fullString(string line, int length)
-        {
-            if (line.Length > length)
-                return line.Substring(0, length);
-            else if (line.Length == length)
-                return line;
-            else
-            {
-                //refectaring
-                string tp = "";
-                for (int i = 0; i < length - line.Length; i++)
-                    tp += " ";
-                return line + tp;
-            }
-        }
-        /**
-         * Set the color that depends on file extension
-         */
-        private ConsoleColor getExtensionColor(string _ex_)
-        {
-            ConsoleColor output;
-            switch (_ex_)
-            {
-                case ".exe" :
-                    output = ConsoleColor.Green;
-                    break;
-                case ".cs" :
-                    output = ConsoleColor.DarkGray;
-                    break;
-                case ".sys" :
-                    output = ConsoleColor.Green;
-                    break;
-                case ".ini" :
-                    output = ConsoleColor.DarkRed;
-                    break;
-                default :
-                    output = ConsoleColor.Cyan;
-                    break;
-            }
-            return output;
-        }
-    }
+   partial class observer
+   {
+       public void removeSelection()
+       {
+           bool status = false;
+           for (int i = 0; i < LL_list.Count; i++)
+           {
+               //find current selected item
+               line ln = (line)LL_list[i];
+               if (ln.current)
+               {
+                   ln.removeCurrent();
+                   status = true;
+               }
+               if (status)
+               {
+                   ln.deepClear();
+               }
+           }
+           //refresh after removing
+           this.parent.refresh();
+       }
+   }
 }

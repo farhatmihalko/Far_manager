@@ -89,5 +89,32 @@ namespace F
             dInfo.SetAccessControl(dSecurity);
 
         }
+
+        public static bool hasReadAccess(string _path_)
+        {
+            if(Directory.Exists(_path_))
+            {
+                try
+                {
+                    System.Security.AccessControl.DirectorySecurity ds = Directory.GetAccessControl(_path_);
+                    DirectoryInfo d = new DirectoryInfo(_path_);
+                    try
+                    {
+                        d.GetFiles();
+                        d.GetDirectories();
+                    }
+                    catch(StackOverflowException e)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -24,16 +24,18 @@ namespace F
         public int height;
         public observer ob_left;
 
+        public Application app;
         public string current_path = "";
 
         //constructor
-        public Panel(int x, int y, int width, int height)
+        public Panel(int x, int y, int width, int height, Application app)
         {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
 
+            this.app = app;
             //drawing panel interface
             this.draw();
 
@@ -251,6 +253,13 @@ namespace F
             
             //save the path
             this.current_path = pos;
+        }
+        /**
+         * Remove choosed file
+         */
+        public void removeSelection()
+        {
+            this.ob_left.removeSelection();
         }
     }
 
