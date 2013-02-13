@@ -12,12 +12,12 @@ namespace F
      * get the defaults params from => Properties class
      * 
      */
-    public partial class Application
+    partial class Application
     {
-        Panel _right;
-        Panel _left;
-        Panel _current;
-        string _identification;
+        public Panel _right;
+        public Panel _left;
+        public Panel _current;
+        public string _identification;
 
         private int footerPos = 0;
         private int progressive = 0;
@@ -53,17 +53,30 @@ namespace F
         //reinialization
         public void reInitialization()
         {
+        }
+        public void reInitialization(string pathLeft, string pathRight)
+        {
+            this.Painter();
             @kit.setBackgroundColor(Properties.BG);
+
             //call panel creates
             this.PanelController();
+            
+            this.Controller();
         }
         //loading new driver
         public void newDeviceInit(string _choose)
         {
+            
             if (_choose == "left")
-                this._right.commander(@"C:\");
+            {
+                this._current = this._right;
+            }
             else if (_choose == "right")
-                this._left.commander(@"C:\");
+            {
+                this._current = this._left;
+            }
+            this._current.selectDriver();
         }
     }
 
@@ -73,9 +86,9 @@ namespace F
      * 1) drawBackground
      *
      */
-    public partial class Application
+    partial class Application
     {
-        private void Painter()
+        public void Painter()
         {
             this.drawBackground();
             this.drawSubFooter();
@@ -110,7 +123,7 @@ namespace F
         }
     }
 
-    public partial class Application
+    partial class Application
     {
         private void Controller()
         {
@@ -207,7 +220,7 @@ namespace F
         }
     }
 
-    public partial class Application
+    partial class Application
     {
         public void PanelController()
         {

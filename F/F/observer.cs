@@ -119,6 +119,8 @@ namespace F
 
                    //working with received files and dirs
                    this.Operate();
+
+                   this.parent.current_path = path + @"\";
                }
                else
                {
@@ -266,6 +268,14 @@ namespace F
            }
            //refresh after removing
            this.parent.refresh();
+       }
+
+       public void selectDrivers()
+       {
+           selectDriver driver = new selectDriver(
+               this.x + this.width / 4, this.y + this.height / 3, this.width / 3 * 2 - 10, this.y + this.height /5, this.parent.app
+               );
+           driver.init();
        }
    }
 }

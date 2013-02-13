@@ -90,6 +90,17 @@ namespace F
             @kit.setFontColor(Properties.FONT);
             @kit.setBackgroundColor(Properties.BG);
         }
+        public void changeBackground(ConsoleColor color, ConsoleColor font)
+        {
+            @kit.setPosition(this.x, this.y);
+            @kit.setBackgroundColor(color);
+            @kit.setFontColor(font);
+
+            @kit.writeLine(this.fullString(this.name, this.length));
+            //to default colors
+            @kit.setFontColor(Properties.FONT);
+            @kit.setBackgroundColor(Properties.BG);
+        }
         /*
          * Clearing line
          */

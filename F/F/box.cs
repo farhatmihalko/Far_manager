@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+using System.IO;
 
 namespace F
 {
@@ -134,11 +136,112 @@ namespace F
 
         public void init()
         {
+            this.draw();
+            this.select();
         }
 
         //
         private void draw()
         {
+            @kit.setBackgroundColor(ConsoleColor.DarkCyan);
+            @kit.draw(this.x, this.y, this.x + this.width, this.y + this.height, ' ');
+            @kit.setBackgroundColor(Properties.BG);
+            @kit.draw(this.x, this.y, this.x + 1, this.y + this.height, '║');
+            @kit.draw(this.x - 1 + this.width, this.y, this.x + this.width, this.y + this.height, '║');
+            @kit.draw(this.x, this.y, this.x + this.width, this.y + 1, '═');
+            @kit.draw(this.x, this.y - 1 + this.height, this.x + this.width, this.y + this.height, '═');
+            @kit.setPosition(this.x, this.y);
+            @kit.writeChar('╔');
+            @kit.setPosition(this.x + this.width - 1, this.y);
+            @kit.writeChar('╗');
+            @kit.setPosition(this.x, this.y + this.height - 1);
+            @kit.writeChar('╚');
+            @kit.setPosition(this.x + this.width - 1, this.y + this.height - 1);
+            @kit.writeChar('╝');
+        }
+        private void select()
+        {
+            Console.CursorVisible = false;
+            bool start = false;
+            ArrayList container = load();
+            foreach (line ll in container)
+            {
+                ll.drawLine();
+            }
+            while (true)
+            {
+                var key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow :
+                        this.select(-1, container);
+                        break;
+                    case ConsoleKey.DownArrow :
+                        this.select(+1, container);
+                        break;
+                    case ConsoleKey.Enter:
+                        this.enter(container);
+                        start = true;
+                        break;
+                }
+                if (start)
+                    break;
+            }
+            Console.CursorVisible = true;
+        }
+        private ArrayList load()
+        {
+            string[] list = Environment.GetLogicalDrives();
+            ArrayList container = new ArrayList();
+            int _y = 0;
+            string last_good = "";
+            foreach (string ll in list)
+            {
+                var drive = new DriveInfo(ll);
+                if(drive.IsReady){
+                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, ll, ll));
+                    last_good = ll;
+                }
+                else
+                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, ll +" not ready", last_good));
+            }
+            return container;
+        }
+        private void select(int number, ArrayList container)
+        {
+            int index = 0;
+            for (int i = 0; i < container.Count; i++)
+            {
+                line ll = (line)container[i];
+                if (ll.current)
+                {
+                    index = i + number;
+                    if(index < 0)
+                        index = container.Count - 1;
+                    else if(index >= container.Count)
+                        index = 0;
+                    ll.current = false;
+                    ll.changeBackground(ConsoleColor.DarkCyan, ConsoleColor.White);
+                    line llnn = (line)container[index];
+                    llnn.current = true;
+                    llnn.changeBackground(ConsoleColor.Black);
+                    break;
+                }
+            }
+        }
+        private void enter(ArrayList container)
+        {
+            for (int i = 0; i < container.Count; i++)
+            {
+                line ll = (line)container[i];
+                if (ll.current)
+                {
+                    this.app._current.clearing();
+                    this.app._current.draw();
+                    this.app._current.ob_left.draw(ll.destination);
+                    break;
+                }
+            }
         }
     }
 }

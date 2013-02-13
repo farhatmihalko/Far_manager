@@ -56,7 +56,7 @@ namespace F
      */
     partial class Panel
     {
-        private void draw()
+        public void draw()
         {
             //set color
             @kit.setFontColor(ConsoleColor.Cyan);
@@ -99,6 +99,18 @@ namespace F
             @kit.setPosition(this.x + this.width / 2, this.y + this.height - 3);
             @kit.writeChar('┴');
             @kit.setFontColor(Properties.FONT);
+        }
+        public void clearing()
+        {
+            string rr = "";
+            for (int i = this.x; i < this.x + this.width; i++)
+                rr += " ";
+            int cc = 0;
+            for (int i = this.y; i < this.y + this.height; i++)
+            {
+                @kit.setPosition(this.x, this.y + cc++);
+                @kit.writeString(rr);
+            }
         }
     }
 
@@ -279,6 +291,14 @@ namespace F
                 _path_ = _path_.Substring(0, _path_max_len);
             _path_ += ">";
             return _path_;
+        }
+    }
+
+    partial class Panel
+    {
+        public void selectDriver()
+        {
+            this.ob_left.selectDrivers();
         }
     }
 }
