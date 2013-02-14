@@ -320,5 +320,11 @@ namespace F
         {
             this.ob_left.selectDrivers();
         }
+        public void createDir()
+        {
+            createDir boxer = new createDir(this.x + this.width / 7, this.y + this.height / 3, this.width / 4 *3, this.height / 4, this.app);
+            boxer.setHint("Enter new directory name");
+            boxer.init();
+        }
     }
 }

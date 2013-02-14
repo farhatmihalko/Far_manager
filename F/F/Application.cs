@@ -156,6 +156,9 @@ namespace F
                     case ConsoleKey.F2:
                         this.newDeviceInit("right");
                         break;
+                    case ConsoleKey.F7 :
+                        this._current.createDir();
+                        break;
                     case ConsoleKey.F11:
                         this.reInitialization();
                         break;

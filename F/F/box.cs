@@ -267,9 +267,71 @@ namespace F
 
     /**
      * Make directory box
+     * @hint hint string
      */
     class createDir : box
     {
+        public string hint;
+        public createDir(int x, int y, int width, int height, Application app)
+            : base(x, y, width, height, app)
+        {
 
+        }
+        public void setHint(string text)
+        {
+            this.hint = text;
+        }
+
+        public void init()
+        {
+            this.draw();
+            this.drawController();
+            this.worker();
+        }
+        public void draw()
+        {
+            @kit.setBackgroundColor(ConsoleColor.DarkCyan);
+            @kit.draw(this.x, this.y, this.x + this.width, this.y + this.height, ' ');
+            @kit.setBackgroundColor(Properties.BG);
+            @kit.draw(this.x, this.y, this.x + 1, this.y + this.height, '║');
+            @kit.draw(this.x - 1 + this.width, this.y, this.x + this.width, this.y + this.height, '║');
+            @kit.draw(this.x, this.y, this.x + this.width, this.y + 1, '═');
+            @kit.draw(this.x, this.y - 1 + this.height, this.x + this.width, this.y + this.height, '═');
+            @kit.setPosition(this.x, this.y);
+            @kit.writeChar('╔');
+            @kit.setPosition(this.x + this.width - 1, this.y);
+            @kit.writeChar('╗');
+            @kit.setPosition(this.x, this.y + this.height - 1);
+            @kit.writeChar('╚');
+            @kit.setPosition(this.x + this.width - 1, this.y + this.height - 1);
+            @kit.writeChar('╝');
+        }
+        public void drawController()
+        {
+
+        }
+        public void worker()
+        {
+            bool start = false;
+            Console.CursorVisible = false;
+            while (true)
+            {
+                var key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow :
+                        
+                        break;
+                    case ConsoleKey.DownArrow :
+                        break;
+                    case ConsoleKey.Enter:
+                        start = true;
+                        break;
+                }
+                if (start)
+                    break;
+            }
+        }
+        
     }
 }
