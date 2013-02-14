@@ -320,6 +320,8 @@ namespace F
             this._x_controller = this.x + this.width / 5;
             this._y_controller = this.y + this.height - 3;
             this._width_controller = this.x + this.width - this.width / 5;
+            @kit.setBackgroundColor(Properties.BG);
+            @kit.setFontColor(Properties.FONT);
         }
 
         public void worker()
@@ -327,6 +329,11 @@ namespace F
             bool start = false;
             @kit.setPosition(this._x_controller, this._y_controller);
             Console.CursorVisible = true;
+            @kit.setBackgroundColor(ConsoleColor.Black);
+            @kit.setFontColor(ConsoleColor.White);
+
+            string create_dir_name = "";
+
             while (true)
             {
                 var key = Console.ReadKey(true);
@@ -338,11 +345,41 @@ namespace F
                         break;
                     case ConsoleKey.Enter:
                         start = true;
+                        this.app._current.ob_left.createDirInThisDirectory(create_dir_name);
+                        break;
+                    case ConsoleKey.Backspace :
+                        if(this._x_controller < Console.CursorLeft)
+                        {
+                            @kit.setPosition(Console.CursorLeft - 1, Console.CursorTop);
+                            @kit.writeChar(' ');
+                            @kit.setPosition(Console.CursorLeft - 1, Console.CursorTop);
+                            create_dir_name = create_dir_name.Substring(0, create_dir_name.Length - 1);
+                        }
+                        break;
+                    default:
+                        char ch = key.KeyChar;
+                        char finder = '!';
+                        for(int i = 0; i < Properties.chars.Length; i++)
+                            if (ch == Properties.chars[i])
+                            {
+                                finder = ch;
+                                break;
+                            }
+                        if (finder != '!' && Console.CursorLeft < this._width_controller - 1)
+                        {
+                            @kit.writeChar(finder);
+                            create_dir_name += finder;
+                        }
                         break;
                 }
                 if (start)
                     break;
             }
+            @kit.setBackgroundColor(Properties.BG);
+            @kit.setFontColor(Properties.FONT);
+            this.app._current.clearing();
+            this.app._current.draw();
+            this.app._current.ob_left.draw(this.app._current.current_path.Substring(0, this.app._current.current_path.Length - 1));
         }
         
     }

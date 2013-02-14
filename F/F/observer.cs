@@ -294,5 +294,12 @@ namespace F
            }
            return "-1";
        }
+
+       public void createDirInThisDirectory(string path)
+       {
+           DirectoryInfo dir = new DirectoryInfo(this.parent.current_path.Substring(0, this.parent.current_path.Length - 1) + @"\" + path);
+           if (!dir.Exists)
+               dir.Create();
+       }
    }
 }
