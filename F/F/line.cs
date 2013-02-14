@@ -144,18 +144,25 @@ namespace F
          */
         public void removeCurrent()
         {
-            var dest = this.destination;
-            if (this.isFile())
+            try
             {
-                FileInfo file = new FileInfo(dest);
-                if (!file.IsReadOnly)
-                    File.Delete(dest);
-                this.clearLine(Properties.BG);
-                this.deepClear();
+                var dest = this.destination;
+                if (this.isFile())
+                {
+                    FileInfo file = new FileInfo(dest);
+                    if (!file.IsReadOnly)
+                        File.Delete(dest);
+                    this.clearLine(Properties.BG);
+                    this.deepClear();
+                }
+                else if (this.isDirectory())
+                {
+                    DirectoryInfo dir = new DirectoryInfo(dest);
+                }
             }
-            else if (this.isDirectory())
+            catch (IOException e)
             {
-                DirectoryInfo dir = new DirectoryInfo(dest);
+                //do something
             }
         }
         /**

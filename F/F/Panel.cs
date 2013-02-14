@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace F
 {
@@ -278,7 +279,23 @@ namespace F
          */
         public void copy()
         {
-
+            string selected = this.ob_left.getSelectedItemPath();
+            Panel nonCurrent = this.app.getNonSelectedPanel();
+            if (selected != "-1")
+            {
+                FileInfo fl = new FileInfo(nonCurrent.current_path.Substring(0, nonCurrent.current_path.Length - 1) + @"\" + selected);
+                if (!fl.Exists)
+                {
+                    fl.Create();
+                }
+                fl = null;
+                /*File.Copy(
+                    this.current_path.Substring(0, this.current_path.Length - 1) + @"\" + selected, 
+                    nonCurrent.current_path.Substring(0, nonCurrent.current_path.Length - 1)  + @"\" + selected,
+                    true);
+                 */
+                nonCurrent.refresh();
+            }
         }
     }
 

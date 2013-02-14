@@ -1,0 +1,5 @@
+D:\Far_manager\F\F\bin\Release\F.exe.config
+D:\Far_manager\F\F\bin\Release\F.exe
+D:\Far_manager\F\F\bin\Release\F.pdb
+D:\Far_manager\F\F\obj\Release\F.exe
+D:\Far_manager\F\F\obj\Release\F.pdb

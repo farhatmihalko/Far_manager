@@ -277,5 +277,22 @@ namespace F
                );
            driver.init();
        }
+
+       public string getSelectedItemPath()
+       {
+           for (int i = 0; i < LL_list.Count; i++)
+           {
+               line ll = (line)LL_list[i];
+               if (ll.current)
+               {
+                   if (ll.isFile())
+                   {
+                       FileInfo ff = new FileInfo(ll.destination);
+                       return ff.Name;
+                   }
+               }
+           }
+           return "-1";
+       }
    }
 }

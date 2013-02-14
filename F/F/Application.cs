@@ -256,6 +256,13 @@ namespace F
             //adding to footer name
             this.setToFooterString();
         }
+        public Panel getNonSelectedPanel()
+        {
+            if (this._identification == "left")
+                return this._right;
+            else
+                return this._left;
+        }
     }
 
     //working with footer
