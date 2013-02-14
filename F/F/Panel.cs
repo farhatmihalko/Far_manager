@@ -289,11 +289,7 @@ namespace F
                     fl.Create();
                 }
                 fl = null;
-                /*File.Copy(
-                    this.current_path.Substring(0, this.current_path.Length - 1) + @"\" + selected, 
-                    nonCurrent.current_path.Substring(0, nonCurrent.current_path.Length - 1)  + @"\" + selected,
-                    true);
-                 */
+                //refresh added page
                 nonCurrent.refresh();
             }
         }

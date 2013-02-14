@@ -171,6 +171,9 @@ namespace F
             {
                 ll.drawLine();
             }
+
+            for(int i = 0; i < container.Count; i++)
+                this.select(+1, container);
             while (true)
             {
                 var key = Console.ReadKey(true);
@@ -201,19 +204,26 @@ namespace F
             foreach (string ll in list)
             {
                 var drive = new DriveInfo(ll);
-                if(drive.IsReady){
+                if (drive.IsReady)
+                {
                     var information = ll;
-                    for (int i = 0; i < this.width / 12 * 3; i++)
+                    information += drive.DriveType;
+                    for (int i = 0; i < this.width / 20 * 3; i++)
                         information += " ";
                     information += @kit.sizeReduce(drive.TotalSize.ToString());
-                    for (int i = 0; i < this.width / 12 * 3; i++)
+                    for (int i = 0; i < this.width / 20 * 3; i++)
                         information += " ";
                     information += @kit.sizeReduce(drive.AvailableFreeSpace.ToString());
                     container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, information, ll));
                     last_good = ll;
                 }
                 else
-                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, ll +" not ready", last_good));
+                {
+                    var information = ll;
+                    information += drive.DriveType;
+                    information += " not ready";
+                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, information, last_good));
+                }
             }
             return container;
         }
@@ -253,5 +263,13 @@ namespace F
                 }
             }
         }
+    }
+
+    /**
+     * Make directory box
+     */
+    class createDir : box
+    {
+
     }
 }
