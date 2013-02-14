@@ -272,6 +272,10 @@ namespace F
     class createDir : box
     {
         public string hint;
+        public int _x_controller;
+        public int _y_controller;
+        public int _width_controller;
+
         public createDir(int x, int y, int width, int height, Application app)
             : base(x, y, width, height, app)
         {
@@ -308,19 +312,27 @@ namespace F
         }
         public void drawController()
         {
-
+            @kit.setPosition(this.x + this.width / 5, this.y + this.height - 5);
+            @kit.writeLine(this.hint);
+            @kit.setBackgroundColor(ConsoleColor.Black);
+            @kit.setFontColor(ConsoleColor.White);
+            @kit.draw(this.x + this.width/5, this.y + this.height - 3, this.x + this.width - this.width / 5, this.y + this.height - 2, ' ');
+            this._x_controller = this.x + this.width / 5;
+            this._y_controller = this.y + this.height - 3;
+            this._width_controller = this.x + this.width - this.width / 5;
         }
+
         public void worker()
         {
             bool start = false;
-            Console.CursorVisible = false;
+            @kit.setPosition(this._x_controller, this._y_controller);
+            Console.CursorVisible = true;
             while (true)
             {
                 var key = Console.ReadKey(true);
                 switch (key.Key)
                 {
-                    case ConsoleKey.UpArrow :
-                        
+                    case ConsoleKey.UpArrow :  
                         break;
                     case ConsoleKey.DownArrow :
                         break;
