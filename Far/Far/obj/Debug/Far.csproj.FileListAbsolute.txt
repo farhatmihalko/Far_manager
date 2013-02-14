@@ -1,6 +1,0 @@
-D:\Far_manager\Far\Far\bin\Debug\Far.exe.config
-D:\Far_manager\Far\Far\bin\Debug\Far.exe
-D:\Far_manager\Far\Far\bin\Debug\Far.pdb
-D:\Far_manager\Far\Far\obj\Debug\Far.csprojResolveAssemblyReference.cache
-D:\Far_manager\Far\Far\obj\Debug\Far.exe
-D:\Far_manager\Far\Far\obj\Debug\Far.pdb
