@@ -116,5 +116,27 @@ namespace F
             }
             return false;
         }
+
+        public static string sizeReduce(string size)
+        {
+            long _size = long.Parse(size);
+            string rr = "B";
+            if (_size / (1024 * 1024 * 1024) >= 1)
+            {
+                _size /= 1024 * 1024 * 1024;
+                rr = "GB";
+            }
+            else if (_size / (1024 * 1024) >= 1)
+            {
+                _size /= 1024 * 1024;
+                rr = "MB";
+            }
+            else if (_size > 1024 - 1)
+            {
+                _size /= 1024;
+                rr = "KB";
+            }
+            return _size.ToString() + rr;
+        }
     }
 }

@@ -159,6 +159,9 @@ namespace F
                     case ConsoleKey.F11:
                         this.reInitialization();
                         break;
+                    case ConsoleKey.F5 :
+                        this._current.copy();
+                        break;
                     case ConsoleKey.F6:
                         this._current.removeSelection();
                         break;
@@ -227,6 +230,7 @@ namespace F
             //creating panel
             this._right = new Panel(0, 0, Properties.WIDTH / 2, Properties.HEIGHT - 2, this);
             this._left = new Panel(Properties.WIDTH / 2 + 1, 0, Properties.WIDTH / 2 - 1, Properties.HEIGHT - 2, this);
+            
             this._current = this._right;
             this._identification = "right";
 

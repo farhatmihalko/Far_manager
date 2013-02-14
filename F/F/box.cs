@@ -127,6 +127,9 @@ namespace F
         }
     }
 
+    /**
+     * Driver choosing box
+     */
     class selectDriver : box
     {
         public selectDriver(int x, int y, int width, int height, Application app)
@@ -193,13 +196,20 @@ namespace F
         {
             string[] list = Environment.GetLogicalDrives();
             ArrayList container = new ArrayList();
-            int _y = 0;
+            int _y =  1;
             string last_good = "";
             foreach (string ll in list)
             {
                 var drive = new DriveInfo(ll);
                 if(drive.IsReady){
-                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, ll, ll));
+                    var information = ll;
+                    for (int i = 0; i < this.width / 12 * 3; i++)
+                        information += " ";
+                    information += @kit.sizeReduce(drive.TotalSize.ToString());
+                    for (int i = 0; i < this.width / 12 * 3; i++)
+                        information += " ";
+                    information += @kit.sizeReduce(drive.AvailableFreeSpace.ToString());
+                    container.Add(new line(this.x + 2, this.y + 1 + _y++, this.width - 4, true, information, ll));
                     last_good = ll;
                 }
                 else

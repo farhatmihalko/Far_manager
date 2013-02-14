@@ -273,6 +273,13 @@ namespace F
         {
             this.ob_left.removeSelection();
         }
+        /**
+         * Copy choosing file
+         */
+        public void copy()
+        {
+
+        }
     }
 
     /**
